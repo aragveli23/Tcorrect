@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Text Correction</h1>
+<form method="POST" action="{{ url_for('correct_text') }}">
+    <div class="mb-3">
+        <label for="text" class="form-label">Enter Text</label>
+        <textarea class="form-control" id="text" name="text" rows="4" required>{{ original if original else 'text' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Correct Text</button>
+</form>
+
+{% if corrected %}
+    <hr>
+    <h3>Corrected Text:</h3>
+    <p>{{ corrected }}</p>
+{% endif %}
+{% endblock %}

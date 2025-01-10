@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tcorrect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background-color: #e8f5e9;
+            color: #006400;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: #b9f6ca;
+        }
+
+        .navbar-brand {
+            color: #006400;
+            font-weight: bold;
+        }
+
+        .navbar-brand:hover {
+            color: #004d00;
+        }
+
+        .nav-link {
+            color: #006400;
+        }
+
+        .nav-link:hover {
+            color: #004d00;
+        }
+
+        .btn-primary {
+            background-color: #006400;
+            border-color: #006400;
+        }
+
+        .btn-primary:hover {
+            background-color: #004d00;
+            border-color: #004d00;
+        }
+
+        .alert-warning {
+            background-color: #b9f6ca;
+            color: #4caf50;
+        }
+
+        h2, h3 {
+            color: #006400;
+        }
+
+        textarea {
+            border-color: #006400;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: auto;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        footer .row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        footer .col-lg-2 {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Tcorrect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    {% if session['user_id'] %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-warning">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}
+        <div class="text-center">
+            <h2>Tcorrect</h2>
+            <form method="POST" action="{{ url_for('correct_text') }}">
+                <div class="mb-3">
+                    <textarea name="text" class="form-control" rows="4" placeholder="Enter text to correct"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Correct Text</button>
+            </form>
+            {% if original %}
+                <h3 class="mt-4">Original Text:</h3>
+                <p>{{ original }}</p>
+                <h3>Corrected Text:</h3>
+                <p>{{ corrected }}</p>
+            {% endif %}
+        </div>
+        {% endblock %}
+    </div>
+
+    <footer>
+        <div class="container p-4">
+            <section>
+                <div class="row">
+                    <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                        <div data-mdb-ripple-init class="bg-image hover-overlay shadow-1-strong rounded" data-ripple-color="light">
+                            <img src="https://repository-images.githubusercontent.com/727451555/e5218fd8-124c-48e7-bf05-def387c0d32e" class="w-100" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                        <div data-mdb-ripple-init class="bg-image hover-overlay shadow-1-strong rounded" data-ripple-color="light">
+                            <img src="https://images.pond5.com/correction-mistakes-text-icon-animation-footage-145264511_iconl.jpeg" class="w-100" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                        <div data-mdb-ripple-init class="bg-image hover-overlay shadow-1-strong rounded" data-ripple-color="light">
+                            <img src="https://img.freepik.com/free-vector/copywriter-huge-laptop-writting-creative-advertising-text-copywriting-job-home-based-copywriter-freelance-copywriting-concept_335657-837.jpg" class="w-100" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- New Image Added -->
+                    <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                        <div data-mdb-ripple-init class="bg-image hover-overlay shadow-1-strong rounded" data-ripple-color="light">
+                            <img src="https://play-lh.googleusercontent.com/jDZey_jeFRaVFKRBgaS3mWtrEP8S8DPRl-B4YijVGf-OxcN6dAB8j7AyDddlvAZN4nOM" class="w-100" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="text-center">
+        <h2>Text Correction</h2>
+        <form method="POST" action="{{ url_for('correct_text') }}">
+            <div class="mb-3">
+                <textarea name="text" class="form-control" rows="4" placeholder="Enter text to correct"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Correct Text</button>
+        </form>
+
+        {% if original %}
+            <h3 class="mt-4">Original Text:</h3>
+            <p>{{ original }}</p>
+            <h3>Corrected Text:</h3>
+            <p>{{ corrected }}</p>
+        {% endif %}
+    </div>
+{% endblock %}
